@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
 const Register = () => {
+    const apiUrl = process.env.REACT_APP_DEV_API;
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [password2, setPassword2] = useState(''); 
     const [email, setEmail] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const handleRegister = async (e) => {
         e.preventDefault();
-        const response = await fetch('http://127.0.0.1:8000/api/register/', {
+        const response = await fetch(`${apiUrl}/register/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -15,7 +19,10 @@ const Register = () => {
             body: JSON.stringify({
                 username,
                 password,
-                email
+                password2,
+                email,
+                first_name: firstName,
+                last_name: lastName
             })
         });
         const data = await response.json();
@@ -44,6 +51,30 @@ const Register = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Confirm password:</label>
+                    <input
+                        type="password"
+                        value={password2}
+                        onChange={(e) => setPassword2(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>First name:</label>
+                    <input
+                        type="text"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Last name:</label>
+                    <input
+                        type="text"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                     />
                 </div>
                 <div>
